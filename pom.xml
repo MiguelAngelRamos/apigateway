@@ -41,6 +41,13 @@
 			<artifactId>spring-cloud-starter-gateway</artifactId>
 		</dependency>
 		<!-- End Api Gateway -->
+
+		<!--ConfigServer -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-config</artifactId>
+		</dependency>
+		<!--/ConfigServer-->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>

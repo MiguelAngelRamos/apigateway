@@ -35,18 +35,25 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
-		<!-- Api Gateway -->
+		<!-- Start Api Gateway -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-gateway</artifactId>
 		</dependency>
 		<!-- End Api Gateway -->
 
-		<!--ConfigServer -->
+		<!-- Start Para implementar circuit breaker en el API GATEWAY -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-config</artifactId>
+			<artifactId>spring-cloud-starter-circuitbreaker-reactor-resilience4j</artifactId>
 		</dependency>
+		<!-- End Para implementar circuit breaker en el API GATEWAY -->
+		
+		<!--ConfigServer -->
+		<!-- <dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-config</artifactId>
+		</dependency> -->
 		<!--/ConfigServer-->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>

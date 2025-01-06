@@ -1,5 +1,7 @@
 package com.kibernumacademy.apigateway.beans;
 
+import java.util.Set;
+
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
@@ -49,8 +51,15 @@ public class GatewayBeans {
             .uri("lb://pricing-service")) // URI con balanceador de carga
         .route("company-service", route -> route
             .path("/company/**")
+            .filters(filter -> {
+                filter.circuitBreaker(config -> config
+                    .setName("gateway-circuit-breaker")
+                    .setStatusCodes(Set.of("500", "400", "408"))
+                    .setFallbackUri("forward:/company-fallback/*"));
+                return filter;
+            })
             .uri("lb://company-service"))
-            .route("report-msv", route -> route
+        .route("report-msv", route -> route
             .path("/report/**")
             .uri("lb://report-msv"))
         .route("company-fallback", route -> route
@@ -58,5 +67,8 @@ public class GatewayBeans {
             .uri("lb://company-fallback"))
         .build();
   
+        /**
+         * El código de estado HTTP 408, también conocido como "Request Timeout" o "Tiempo de espera agotado en la solicitud", indica que el servidor web no recibió una solicitud completa del cliente dentro del tiempo esperado
+         */
   }
 }

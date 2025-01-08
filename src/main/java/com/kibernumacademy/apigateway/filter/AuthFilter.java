@@ -4,6 +4,7 @@ import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ServerWebExchange;
 
@@ -11,6 +12,7 @@ import com.kibernumacademy.apigateway.dto.TokenDto;
 
 import reactor.core.publisher.Mono;
 
+@Component
 public class AuthFilter implements GatewayFilter {
 
   // Validar el token
@@ -20,9 +22,11 @@ public class AuthFilter implements GatewayFilter {
 
   private final WebClient webclient;
 
+
   public AuthFilter() {
     this.webclient = WebClient.builder().build();
   }
+  
   @Override
   public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 

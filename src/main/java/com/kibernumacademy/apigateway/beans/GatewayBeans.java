@@ -8,10 +8,18 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
-@Configuration
-public class GatewayBeans {
+import com.kibernumacademy.apigateway.filter.AuthFilter;
 
-  @Bean
+@Configuration
+
+public class GatewayBeans {
+  private final AuthFilter authFilter;
+  
+  public GatewayBeans(AuthFilter authFilter) {
+    this.authFilter = authFilter;
+}
+
+@Bean
   @Profile(value = "eureka-on")
   public RouteLocator routeLocatorEurekaOn(RouteLocatorBuilder builder) {
     return builder.routes()
@@ -97,6 +105,7 @@ public class GatewayBeans {
                     .setName("gateway-circuit-breaker")
                     .setStatusCodes(Set.of("500", "400", "408"))
                     .setFallbackUri("forward:/company-fallback/*"));
+                filter.filter(authFilter);
                 return filter;
             })
             .uri("lb://company-service"))
